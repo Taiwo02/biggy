@@ -13,8 +13,8 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <div class="row ">
-            <div class="col-lg-4 col-md-4 container mx-auto col-12 mt-2 shadow">
+        <div class="col-lg-4 col-md-4 col-12 container mx-auto ">
+            <div class=" mt-2 shadow pr-5 pl-5">
                 <%if (message){%>
                     <div class="alert mt-4 <%= message.type == 1 ? 'alert-success' : 'alert-danger' %>">
                         <h6> <%= message %></h6>
