@@ -123,7 +123,7 @@ let users = {
             User.find({}).sort('count').exec(function(err, docs) { 
                 if(!err && docs){
                 //  res.render('login',{message:"successful",helper:helper});
-                res.redirect("/display")
+                res.redirect("/dashboard")
                 }
             })
             }
@@ -137,7 +137,7 @@ let users = {
     dashboard: async (req,res)=>{
         try {
             // console.log(req.user_data)
-            User.find({}).sort('count').exec(function(err, docs) { 
+            User.find({}).sort('count',).exec(function(err, docs) { 
                 if(!err && docs){
                     let sort = docs.sort(function(a, b){return b.count - a.count})
                  res.render('display',{message:"successful",users:sort,user_id:req.user_data});
