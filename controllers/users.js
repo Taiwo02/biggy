@@ -27,7 +27,7 @@ let users = {
         },
         renderReg:async(req,res)=>{
             try {
-               res.render('register',{query : req.params.id,message:"success"});
+               res.render('register',{query : req.params.id,message:null});
                } catch (error) {
                 }
                },
