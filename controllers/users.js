@@ -123,7 +123,7 @@ let users = {
             User.find({}).sort('count').exec(function(err, docs) { 
                 if(!err && docs){
                 //  res.render('login',{message:"successful",helper:helper});
-                res.redirect("/dashboard")
+                res.redirect("/display")
                 }
             })
             }
@@ -140,17 +140,17 @@ let users = {
             User.find({}).sort('count').exec(function(err, docs) { 
                 if(!err && docs){
                     let sort = docs.sort(function(a, b){return b.count - a.count})
-                 res.render('dashboard',{message:"successful",users:sort,user_id:req.user_data});
+                 res.render('display',{message:"successful",users:sort,user_id:req.user_data});
                 }
                 else{ 
-                 res.render('dashboard',{message:"error occure"});
+                 res.render('display',{message:"error occure"});
 
                 }
 
             })
           }
           catch (error) {
-            res.render('dashboard',{message:"error occure"});
+            res.render('display',{message:"error occure"});
 
           }
     },
@@ -160,7 +160,7 @@ let users = {
             User.find({}).sort('count').exec(function(err, docs) { 
                 if(!err && docs){
                     let sort = docs.sort(function(a, b){return b.count - a.count})
-                    
+
                  res.render('dashboard',{message:"successful",users:sort,user_id:req.user_data});
 
                 }
