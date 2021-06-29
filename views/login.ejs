@@ -1,0 +1,45 @@
+<html>
+    <head>
+          <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="row ">
+            <div class="col-lg-4 col-md-4 container mx-auto col-12 mt-2 shadow">
+                <%if (message){%>
+
+                        <div class="alert mt-4 <%= message.type == 1 ? 'alert-success' : 'alert-danger' %>">
+                           <h6> <%= message %></h6>
+                        </div>
+                <%}%>
+
+
+            
+                    <form action="/login"  method="POST">
+                        <h4>Login page</h4>
+                        <br>
+                        <label for="email">Email:</label>
+                        <input name="email" class="form-control" id="email" type="email">
+                        <br/>
+                        <label for="password">Password:</label>
+                        <input name="password" class="form-control" id="password" type="password">
+                        <br/>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            Submit
+                        </button>
+                    </form>
+            </div>
+        </div>
+        
+    </body>
+
+</html>

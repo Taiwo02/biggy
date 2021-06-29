@@ -1,0 +1,56 @@
+<html>
+    <head>
+            <!-- <link href="/css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"> -->
+               <!-- <link href="/css/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"> -->
+               <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+               <!-- Optional theme -->
+               <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+               
+               <!-- Latest compiled and minified JavaScript -->
+               <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="row container mt-5 text-center">
+           <h3>Welcome to the biggy prize of this year</h3>
+           <h4>Wining status</h4>
+           <body class="text-center">
+            <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+            <div class="container bg-light text-dark">
+            <table class="table table-striped">
+            <thead>
+            <tr>
+            <th>#N</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Mobile</th>
+            <th>Status</th>
+            <th>Share link</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%users.forEach(function(user,index) {%>
+            <tr>
+            <td><%=index+1%></td>
+            <td><%=user.firstname%></td>
+            <td><%=user.lastname%></td>
+            <td><%=user.mobile%></td>
+            <td><%=user.count%></td>
+            <td>
+                <%if (user._id == user_id.user){%>
+                    localhost:5000/register/<%=user.link%>
+            <%}%>
+            </td>
+
+            </tr>
+            <%});%>
+            </tbody>
+            </table>
+            </div>
+            </div>
+
+        </div>
+        
+    </body>
+
+</html>

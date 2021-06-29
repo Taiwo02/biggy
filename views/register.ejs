@@ -1,0 +1,52 @@
+<html>
+    <head>
+          <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="row ">
+            <div class="col-lg-4 col-md-4 container mx-auto col-12 mt-2 shadow">
+                <%if (message){%>
+                    <div class="alert mt-4 <%= message.type == 1 ? 'alert-success' : 'alert-danger' %>">
+                        <h6> <%= message %></h6>
+                     </div>
+                     
+                <%}%>
+                    <form  action="/register/<%= query %>"  method="POST">
+                        <label for="firstname">Firstname:</label>
+                        <input name="firstname" class="form-control" id="firstname" type="text">
+                        <br/>
+                        <label for="lastname">Lastname:</label>
+                        <input name="lastname" class="form-control" id="lastname" type="text">
+                        <br/>
+                        <label for="email">Email:</label>
+                        <input name="email" class="form-control" id="lname" type="email">
+                        <br/>
+                        <label for="address">Address:</label>
+                        <input name="address" class="form-control" id="lname" type="address">
+                        <br/>
+                        <label for="password">Password:</label>
+                        <input name="password" class="form-control" id="lname" type="password">
+                        <br/>
+                        <label for="mobile">Mobile:</label>
+                        <input name="mobile" class="form-control" id="lname" type="number">
+                        <br/>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            Submit
+                        </button>
+                    </form>
+            </div>
+        </div>
+        
+    </body>
+
+</html>
