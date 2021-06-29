@@ -14,7 +14,7 @@
     </head>
     <body>
         <div class="row ">
-            <div class="col-lg-4  container mx-auto col-10 mt-2 shadow">
+            <div class="col-lg-4  container mx-auto col-6 mt-2 shadow">
                 <%if (message){%>
                     <div class="alert mt-4 <%= message.type == 1 ? 'alert-success' : 'alert-danger' %>">
                         <h6> <%= message %></h6>
@@ -39,6 +39,8 @@
                         <br/>
                         <label for="mobile">Mobile:</label>
                         <input name="mobile" class="form-control" id="lname" type="number">
+                        <br/>
+                        <label for="mobile">Already have an account <a href="/login">login</a></label>
                         <br/>
                         <button type="submit" class="btn btn-primary btn-block">
                             Submit
