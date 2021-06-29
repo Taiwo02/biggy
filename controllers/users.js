@@ -43,13 +43,17 @@ let users = {
                if(link_id){
                    let user_detaiils =  User.findOne({link:link_id},(err,response)=>{
                        if(err) throw error;
-                       console.log(response)
-                          update = { $set: {count:parseInt(response.count+1)}};
-                          User.updateOne({_id:response._id},update,(err,result)=>{
-                             if(err){
-                                 console.log(err)
-                             }
-                          }) 
+                       
+                       else if(response){
+                           console.log(response)
+                           update = { $set: {count:parseInt(response.count+1)}};
+                           User.updateOne({_id:response._id},update,(err,result)=>{
+                              if(err){
+                                  console.log(err)
+                              }
+                           }) 
+
+                       }
                     })
                }
             let link = `REG${randomstring.generate({
