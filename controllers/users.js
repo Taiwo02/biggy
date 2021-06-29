@@ -43,7 +43,7 @@ let users = {
                if(link_id){
                    let user_detaiils =  User.findOne({link:link_id},(err,response)=>{
                        if(err) throw error;
-                       
+
                        else if(response){
                            console.log(response)
                            update = { $set: {count:parseInt(response.count+1)}};
@@ -140,8 +140,7 @@ let users = {
             User.find({}).sort('count').exec(function(err, docs) { 
                 if(!err && docs){
                     let sort = docs.sort(function(a, b){return b.count - a.count})
-                 res.render('dashboard',{message:"successful",users:sort,user_id:req.user_data});
-
+                 res.render('login',{message:"successful",users:sort,user_id:req.user_data});
                 }
                 else{ 
                  res.render('dashboard',{message:"error occure"});
