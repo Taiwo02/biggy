@@ -27,7 +27,23 @@ let users = {
         },
         renderReg:async(req,res)=>{
             try {
-               res.render('register',{query : req.params.id,message:null});
+                if( req.params.id != 'register'){
+                    User.findOne({link:req.params.id},(err,response)=>{
+                        console.log(req.params.id)
+                        if(err) {
+                            console.log(err)
+                            }
+                        else if(response){
+                            res.render('register',{query : req.params.id,message:null});
+                        }
+                        else{
+                          res.render('error',{message:"Url not found"});
+                        }
+                     })
+                }
+                else{
+                    res.render('register',{query : req.params.id,message:null});
+                }
                } catch (error) {
                 }
                },
@@ -40,6 +56,7 @@ let users = {
     create: async (req, res)=> {
            try {
                let link_id = req.params.id;
+               
                if(link_id){
                    let user_detaiils =  User.findOne({link:link_id},(err,response)=>{
                        if(err) throw error;

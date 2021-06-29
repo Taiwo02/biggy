@@ -13,8 +13,13 @@
     <body>
         <div class="row container mt-5 text-center">
            <h1>Error</h1>
-           <h6>  </h6>
-           <a href="/register">
+           <%if (message){%>
+            <h3><%= message %> </h3>
+            <h6>It may happen that the url is incorrect <br> click register below to register afresh </h3>
+
+
+           <%}%>
+           <a href="/register/register">
                <button class="btn btn-success">Register</button>
            </a>
         </div>
