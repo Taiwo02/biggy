@@ -136,13 +136,13 @@ let users = {
                 // expiresInMinutes: 1440
             });
             res.cookie('auth',token);
+               if(user.isAdmin == true){
+                res.redirect("/admin")
 
-            User.find({}).sort('count').exec(function(err, docs) { 
-                if(!err && docs){
-                //  res.render('login',{message:"successful",helper:helper});
-                res.redirect("/dashboard")
-                }
-            })
+               }
+               else{
+                   res.redirect("/dashboard")
+               }
             }
             else{
                 res.render('login',{message:'invalid email or password'});
@@ -153,7 +153,6 @@ let users = {
     },
     dashboard: async (req,res)=>{
         try {
-            // console.log(req.user_data)
             User.find({}).sort('count',).exec(function(err, docs) { 
                 if(!err && docs){
                     let sort = docs.sort(function(a, b){return b.count - a.count})
@@ -173,23 +172,20 @@ let users = {
     },
     admin: async (req,res)=>{
         try {
-            // console.log(req.user_data)
-            User.find({}).sort('count').exec(function(err, docs) { 
+            User.find({}).sort([['count', 'desc']]).limit(10).exec(function(err, docs) { 
                 if(!err && docs){
-                    let sort = docs.sort(function(a, b){return b.count - a.count})
-
-                 res.render('dashboard',{message:"successful",users:sort,user_id:req.user_data});
+                 res.render('setup',{message:"successful",users:docs,user_id:req.user_data});
 
                 }
                 else{ 
-                 res.render('dashboard',{message:"error occure"});
+                 res.render('admin',{message:"error occure"});
 
                 }
 
             })
           }
           catch (error) {
-            res.render('dashboard',{message:"error occure"});
+            res.render('admin',{message:"error occure"});
 
           }
     },
