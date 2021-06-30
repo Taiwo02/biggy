@@ -153,13 +153,18 @@ let users = {
     },
     dashboard: async (req,res)=>{
         try {
-            User.find().sort([['count', 'desc']]).exec(function(err, docs) { 
+            User.find({isAdmin:false}).sort([['count', 'desc']]).exec(function(err, docs) { 
                 if(!err && docs){
                     // let sort = docs.sort(function(a, b){return b.count - a.count})
                     let filt = docs.find(e =>{
                         return  e._id == req.user_data.user
                     })
-                 res.render('display',{message:"successful",users:docs,user_id:req.user_data,link:filt.link});
+                    if (filt) {
+                        res.render('display',{message:"successful",users:docs,user_id:req.user_data,link:filt.link});
+                    } else { 
+                        res.render('display',{message:"successful",users:docs,user_id:req.user_data,link:null});
+                        
+                    }
                 }
                 else{ 
                  res.render('display',{message:"error occure"});
@@ -174,6 +179,25 @@ let users = {
           }
     },
     admin: async (req,res)=>{
+        try {
+            User.find({isAdmin:false}).sort([['count', 'desc']]).limit(10).exec(function(err, docs) { 
+                if(!err && docs){
+                 res.render('setup',{message:"successful",users:docs,user_id:req.user_data});
+
+                }
+                else{ 
+                 res.render('admin',{message:"error occure"});
+
+                }
+
+            })
+          }
+          catch (error) {
+            res.render('admin',{message:"error occure"});
+
+          }
+    },
+    create_time: async (req,res)=>{
         try {
             User.find({isAdmin:false}).sort([['count', 'desc']]).limit(10).exec(function(err, docs) { 
                 if(!err && docs){
