@@ -9,48 +9,88 @@
                
                <!-- Latest compiled and minified JavaScript -->
                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    </head>
+              <style>
+                  .b {
+                            white-space: nowrap; 
+                            width: 20%; 
+                            overflow: hidden;
+                            text-overflow: ellipsis; 
+                             border: none;
+                             background-color: inherit;
+                            /* border: 1px solid #000000; */
+                            }
+                            button{
+                                border:none;
+                                outline: none;
+                                background-color: blue;
+                                color:white;
+                                border-radius:5px;
+                                margin-bottom: 10px;
+                            }
+              </style>
+     </head>
     <body>
-        <div class="row container mt-5 text-center">
-           <h3>Welcome to the biggy prize of this year</h3>
-           <h4>Wining status</h4>
-           <body class="text-center">
-            <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-            <div class="container bg-light text-dark">
-            <table class="table table-striped">
-            <thead>
-            <tr>
-            <th>#N</th>
-            <th>Firstname</th>
-            <th>Lastname</th>
-            <th>Mobile</th>
-            <th>Status</th>
-            <th>Share link</th>
-            </tr>
-            </thead>
-            <tbody>
-            <%users.forEach(function(user,index) {%>
-            <tr>
-            <td><%=index+1%></td>
-            <td><%=user.firstname%></td>
-            <td><%=user.lastname%></td>
-            <td><%=user.mobile%></td>
-            <td><%=user.count%></td>
-            <td style="width: 50px;">
-                <%if (user._id == user_id.user){%>
-                    biggyprize.herokuapp. <br>com/register/<br> <%=user.link%>
-            <%}%>
-            </td>
 
-            </tr>
-            <%});%>
-            </tbody>
-            </table>
-            </div>
-            </div>
+        <div class="container">
+            <h2>Welcome to the biggy prize of this year</h2>
+            <span> This is where you will see the update</span>
+            <div> 
+                <div class="cloat-right">
+                    <b>Share your link :  </b>
+                   <input type="text" disabled class="b" id="link" value="https://biggyprize.herokuapp.com/register/<%=link%>" >
+                   <button  onclick="myFunction()">Copy link</button>
 
-        </div>
+               </div>
+            </div>  
+                                                                                                
+            
+            <div class="table-responsive mt-5 pt-5">
+              <table class="table table-bordered">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>#</th>
+                    <th>Full name</th>
+                    <th>Mobile</th>
+                    <th>Status</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                    <%users.forEach(function(user,index) {%>
+                        <tr>
+                        <td><%=index+1%></td>
+                        <td><%=user.firstname%> <%=user.lastname%></td>
+                        <td><%=user.mobile%></td>
+                        <td><%=user.count%></td>
+                        <!-- <td style="width: 50px;">
+                            <%if (user._id == user_id.user){%>
+                                biggyprize.herokuapp. <br>com/register/<br> <%=user.link%>
+                        <%}%>
+                        </td> -->
+            
+                        </tr>
+                        <%});%>
+                </tbody>
+              </table>
+            </div>
+          </div>
         
     </body>
+    <script>
+        function myFunction(){
+            /* Get the text field */
+            var copyText = document.getElementById("link");
+
+            /* Select the text field */
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+            /* Copy the text inside the text field */
+            document.execCommand("copy");
+
+            /* Alert the copied text */
+            alert("Copied the text: " + copyText.value);
+        }
+    </script>
 
 </html>
