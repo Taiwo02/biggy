@@ -12,7 +12,7 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </head>
-    <body>
+    <body onload="inter()">
         <div class="container mt-5 text-center">
             <div class="row">
                 <div class="col-8">
@@ -20,12 +20,16 @@
                     <h6>The first 10 wining users</h6> 
                 </div>
                  <div class="col-lg-4 col-12">
-                <%if (users){%>
-                <label>Starting : </label>
-                <input type="date" name="" id=""><br>
-                <label>Ending : </label>
-                <input type="date" name="" id=""><br>
-                <button class="btn btn-primary">start</button>
+                <%if (!users){%>
+                    <form  action="/admin"  method="POST">
+                        <label>Open new competition now </label><br>
+                        <!-- <input type="date"  name="start" id="start"><br> -->
+                        <label>Ending : </label>
+                        <input type="date" name="end" id="end"><br>
+                        <button type="submit" class="btn btn-primary btn-block col-lg-4 col-md-4 col-2 mx-auto">
+                            Start
+                        </button>
+                    </form>
                 <%}%>
             </div>
 
@@ -65,5 +69,6 @@
         </div>
         
     </body>
-
+    <script>
+    </script>
 </html>

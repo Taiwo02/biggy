@@ -1,4 +1,6 @@
 const User = require('../model/user');
+const Timing = require('../model/timing');
+
 const jwt = require('jsonwebtoken');
 const date = require('../midlewares/date')
 const _ = require('lodash');
@@ -199,23 +201,46 @@ let users = {
     },
     create_time: async (req,res)=>{
         try {
-            User.find({isAdmin:false}).sort([['count', 'desc']]).limit(10).exec(function(err, docs) { 
-                if(!err && docs){
-                 res.render('setup',{message:"successful",users:docs,user_id:req.user_data});
-
-                }
-                else{ 
-                 res.render('admin',{message:"error occure"});
-
-                }
-
-            })
+            let {end}=req.body
+           console.log(date.fullDate)
+           if(end){
+               let response = await Timing({
+                   startingDate:date.fullDate,
+                   startingTime:date.time,
+                   endingDate:end,
+                   endingTime:date.time,
+                   created_by:req.user_data.user
+                })
+                response.save((err,result)=>{
+                    if(err) throw err;
+                res.redirect('/admin');
+                })
+           }
           }
           catch (error) {
             res.render('admin',{message:"error occure"});
 
           }
     },
+    countdown: async (req,res)=>{
+        try {
+            let result = Timing.findOne({status:1},(err,response)=>{
+                if(err) throw err;
+                
+            })
+            
+          }
+          catch (error) {
+            res.render('admin',{message:"error occure"});
+
+          }
+    },
+    countDown: async(req,res)=>{
+         setInterval(() => {
+             
+         }, 60000);
+
+ },
     
 
 

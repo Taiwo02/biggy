@@ -11,4 +11,6 @@ router.route('/register/:id').post(users.create);
 router.route('/login').post(users.login)
 router.route('/dashboard').get(auth,users.dashboard)
 router.route('/admin').get(auth,verify,users.admin)
+router.route('/admin').post(auth,verify,users.create_time)
+
 module.exports = router;
