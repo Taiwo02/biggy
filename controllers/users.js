@@ -70,7 +70,7 @@ let users = {
            try {
                let link_id = req.params.id;
                
-               Timing.findOne({status:1},(err,responses)=>{
+               Timing.findOne({status:1},async(err,responses)=>{
                 if(err) {console.log(err)}
                 else if(responses){
                if(link_id){
