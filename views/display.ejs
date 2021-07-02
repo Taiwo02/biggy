@@ -43,14 +43,14 @@
                 <span class="mb-4"> This is where you will see the update</span>
                    <%}%>
             <div class="row mt-4">  
-                <% if(link){%>
+                <!-- <% if(link){%> -->
                 <div class="cloat-right col-6">
                     <b>Share your link :  </b>
                    <input type="text" disabled class="b" id="link" value="https://biggyprize.herokuapp.com/register/<%=link%>" >
                    <button  onclick="myFunction()">Copy link</button>
 
                </div>
-               <%}%>
+               <!-- <%}%> -->
                <% if(count_down){%>
                <table class="table col-6 col-lg-4">
                 <thead>
@@ -96,12 +96,6 @@
                         <td><%=user.mobile%></td>
                         <td><%=user.address%></td>
                         <td><%=user.count%></td>
-                        <!-- <td style="width: 50px;">
-                            <%if (user._id == user_id.user){%>
-                                biggyprize.herokuapp. <br>com/register/<br> <%=user.link%>
-                        <%}%>
-                        </td> -->
-            
                         </tr>
                         <%});%>
                 </tbody>
