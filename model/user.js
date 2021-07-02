@@ -12,6 +12,8 @@ let user_schema = new Schema({
       mobile:{type:String,required:true,trim:true},
       count:{type:Number},
       link:{type:String},
+      campaign_id:{type:String},
+
 })
 user_schema.pre('save',(next)=>{
     const user = this;

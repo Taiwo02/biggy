@@ -30,26 +30,36 @@ let users = {
         },
         renderReg:async(req,res)=>{
             try {
-                if( req.params.id != 'register'){
-                    User.findOne({link:req.params.id},(err,response)=>{
-                        console.log(req.params.id)
-                        if(err) {
-                            console.log(err)
-                            }
-                        else if(response){
-                            res.render('register',{query : req.params.id,message:null});
+                Timing.findOne({status:1},(err,response)=>{
+                    if(err) {console.log(err)}
+                    else if(response){
+                        if( req.params.id != 'register'){
+                            User.findOne({link:req.params.id},(err,response)=>{
+                                console.log(req.params.id)
+                                if(err) {
+                                    console.log(err)
+                                    }
+                                else if(response){
+                                    res.render('register',{query : req.params.id,message:null});
+                                }
+                                else{
+                                  res.render('error',{message:"Url not found"});
+                                }
+                             })
                         }
                         else{
-                          res.render('error',{message:"Url not found"});
+                            res.render('register',{query : req.params.id,message:null});
                         }
-                     })
-                }
-                else{
-                    res.render('register',{query : req.params.id,message:null});
-                }
+                    }
+                    else{
+                        re.redirect("/")
+                    }
+                })
+               
                } catch (error) {
                 }
                },
+
                renderLog:async(req,res)=>{
                 try {
                    res.render('login',{message:null});
@@ -60,10 +70,12 @@ let users = {
            try {
                let link_id = req.params.id;
                
+               Timing.findOne({status:1},(err,responses)=>{
+                if(err) {console.log(err)}
+                else if(responses){
                if(link_id){
                    let user_detaiils =  User.findOne({link:link_id},(err,response)=>{
                        if(err) throw error;
-
                        else if(response){
                            console.log(response)
                            update = { $set: {count:parseInt(response.count+1)}};
@@ -81,7 +93,7 @@ let users = {
                 charset: "numeric",
               })}${Date.now()}`;
             const {firstname,lastname,email,address,password,mobile} = req.body; 
-            const result=await new User({firstname,lastname,email,address,password,mobile,link,count:1});
+            const result=await new User({firstname,lastname,email,address,password,mobile,link,count:1,campaign_id:responses._id});
             result.save(function(error,response){
                 if(response && !error){ 
                     res.redirect('/login');
@@ -121,8 +133,16 @@ let users = {
                     res.render('register',{message:mess});
 
                 }
+              })
+            
+             }
+             else{
+                 res.redirect("/")
+             }
+
             })
-           } catch (error) {
+           } 
+           catch (error) {
             res.render('register',{message:"An error occure"});
 
            }
@@ -159,9 +179,7 @@ let users = {
             Timing.findOne({status:1},(err,response)=>{
                 if(err) {console.log(err)}
                 else if(response){
-                    console.log(response)
-                
-                    var today = new Date();
+            var today = new Date();
             var target = new Date(response.endingDate +','+response.endingTime);
             var currentTime = today.getTime();
             var targetTime = target.getTime();
@@ -197,7 +215,7 @@ let users = {
                 })
                 // clearTimeout(set)
             }
-            User.find({isAdmin:false}).sort([['count', 'desc']]).exec(function(err, docs) { 
+            User.find({isAdmin:false,campaign_id:response._id}).sort([['count', 'desc']]).exec(function(err, docs) { 
                 if(!err && docs){
                     // let sort = docs.sort(function(a, b){return b.count - a.count})
                     let filt = docs.find(e =>{
@@ -274,7 +292,6 @@ let users = {
             min = min % 60;
             sec = sec % 60;
         
-        
             hrs = (hrs<10) ? "0"+hrs : hrs;
             min = (min<10) ? "0"+min : min;
             sec = (sec<10) ? "0"+sec : sec;
@@ -289,7 +306,7 @@ let users = {
                   
                 })
             }
-            User.find({isAdmin:false}).sort([['count', 'desc']]).limit(10).exec(function(err, docs) { 
+            User.find({isAdmin:false,campaign_id:response._id}).sort([['count', 'desc']]).limit(10).exec(function(err, docs) { 
                 if(!err && docs){
                     // let reses = users.countDown()
                  res.render('setup',{message:"successful",users:docs,user_id:req.user_data,count_down:timedown,endin:response.endingDate });
