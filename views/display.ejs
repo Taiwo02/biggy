@@ -36,11 +36,11 @@
         <div class="container text-center">
             <h2>Welcome to the biggy prize winning of this year</h2>
             <% if(message == 'No campaign goin on'){%>
-            <span><%=message%></span>
+            <span  class="mb-4"><%=message%></span>
 
                <%}%>
                <% if(message != 'No campaign goin on'){%>
-                <span> This is where you will see the update</span>
+                <span class="mb-4"> This is where you will see the update</span>
                    <%}%>
             <div class="row">  
                 <% if(link){%>
@@ -130,7 +130,7 @@
            let minutes = document.getElementById("minute").innerHTML
 
            var set;
-           if (days == 00 && hours == 00 && minutes == 00) {
+           if (days == 0 && hours == 00 && minutes == 00) {
                clearTimeout(set)
            } else {
                set = setTimeout(() => {
