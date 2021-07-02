@@ -31,20 +31,48 @@
                             }
               </style>
      </head>
-    <body>
+    <body onload="reloads()">
 
         <div class="container">
             <h2>Welcome to the biggy prize winning of this year</h2>
-            <span> This is where you will see the update</span>
-            <div> 
+            <% if(message == 'No campaign goin on'){%>
+            <span><%=message%></span>
+
+               <%}%>
+               <% if(message != 'No campaign goin on'){%>
+                <span> This is where you will see the update</span>
+                   <%}%>
+            <div class="row">  
                 <% if(link){%>
-                <div class="cloat-right">
+                <div class="cloat-right col-6">
                     <b>Share your link :  </b>
                    <input type="text" disabled class="b" id="link" value="https://biggyprize.herokuapp.com/register/<%=link%>" >
                    <button  onclick="myFunction()">Copy link</button>
 
                </div>
                <%}%>
+               <% if(count_down){%>
+               <table class="table col-6 col-lg-4">
+                <thead>
+                    <tr>
+                        <th>Ending in</th>
+                 </tr>
+             </thead>
+                   <thead>
+                <tr>
+                <th>Day(s)</th>
+                <th>Hour(s)</th>
+                <th>Minute(s)</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="day"><%=count_down.days%> </td>
+                        <td id="hour"><%=count_down.hrs%> </td>
+                        <td id="minute"> <%=count_down.min%> </td>
+                    </tr>
+                </tbody>
+                </table>
             </div>  
                                                                                                 
             
@@ -76,6 +104,7 @@
                         <%});%>
                 </tbody>
               </table>
+              <%}%>
             </div>
           </div>
         
@@ -94,6 +123,20 @@
 
             /* Alert the copied text */
             alert("Copied the text: " + copyText.value);
+        }
+       function  reloads(param){
+           let days = document.getElementById("day").innerHTML
+           let hours = document.getElementById("hour").innerHTML
+           let minutes = document.getElementById("minute").innerHTML
+
+           var set;
+           if (days == 00 && hours == 00 && minutes == 00) {
+               clearTimeout(set)
+           } else {
+               set = setTimeout(() => {
+                   location.reload()
+               }, 60000);
+           }
         }
     </script>
 

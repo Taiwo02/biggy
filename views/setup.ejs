@@ -12,14 +12,41 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </head>
-    <body onload="inter()">
+    <body onload="reloads()">
         <div class="container mt-5 text-center">
             <div class="row">
                 <div class="col-8">
                     <h4>Wining status</h4>
-                    <h6>The first 10 wining users</h6> 
+                    <%if(!users){%>
+                        <h6>{{message}}</h6> 
+
+                    <%}%>
+                    <%if(users){%>
+                        <h6>Winners of the competition</h6> 
+                    <%}%>
                 </div>
                  <div class="col-lg-4 col-12">
+                     <%if(count_down){%>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                            <th>Day(s)</th>
+                            <th>Hour(s)</th>
+                            <th>Minute(s)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td id="day"><%=count_down.days%> </td>
+                                    <td id="hour"><%=count_down.hrs%> </td>
+                                    <td id="minute"> <%=count_down.min%> </td>
+
+                                    
+                                </tr>
+                            </tbody>
+                            </table>
+                            <%}%>
+
                 <%if (!users){%>
                     <form  action="/admin"  method="POST">
                         <label>Open new competition now </label><br>
@@ -47,6 +74,7 @@
             </tr>
             </thead>
             <tbody>
+            <%if (users){%>
             <%users.forEach(function(user,index) {%>
             <tr>
             <td><%=index+1%></td>
@@ -56,13 +84,13 @@
             <td><%=user.count%></td>
             </tr>
             <%});%>
+            <%}%>
+
             </tbody>
             </table>
             <div>
-                
              </div>
             </div>
-           
             </div>
 
 
@@ -70,5 +98,19 @@
         
     </body>
     <script>
+      function  reloads(param){
+           let days = document.getElementById("day").innerHTML
+           let hours = document.getElementById("hour").innerHTML
+           let minutes = document.getElementById("minute").innerHTML
+
+           var set;
+           if (days == 00 && hours == 00 && minutes == 00) {
+               clearTimeout(set)
+           } else {
+               set = setTimeout(() => {
+                   location.reload()
+               }, 60000);
+           }
+        }
     </script>
 </html>

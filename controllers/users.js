@@ -7,6 +7,7 @@ const _ = require('lodash');
 const path = require('path');
 const helper = require('../helpers/helper');
 const randomstring = require("randomstring");
+var set;
 
 // data = [{
 //     firstname:"admin",
@@ -155,6 +156,47 @@ let users = {
     },
     dashboard: async (req,res)=>{
         try {
+            Timing.findOne({status:1},(err,response)=>{
+                if(err) {console.log(err)}
+                else if(response){
+                    console.log(response)
+                
+                    var today = new Date();
+            var target = new Date(response.endingDate +','+response.endingTime);
+            var currentTime = today.getTime();
+            var targetTime = target.getTime();
+        
+            var time = targetTime - currentTime;
+        
+            var sec = Math.floor(time/1000);
+            var min = Math.floor(sec/60);
+            var hrs = Math.floor(min/60);
+            var days = Math.floor(hrs/24);
+
+            hrs = hrs % 24;
+            min = min % 60;
+            sec = sec % 60;
+        
+        
+            hrs = (hrs<10) ? "0"+hrs : hrs;
+            min = (min<10) ? "0"+min : min;
+            sec = (sec<10) ? "0"+sec : sec;
+           
+             let timedown ={days:days,hrs:hrs,min:min,sec:sec}
+            
+            var set;
+            if(time > 0){
+                console.log(time)
+            //   set =  setTimeout(users.admin, 1000);
+            }else{
+                console.log(time)
+                let update = {$set : {status:0}}
+                Timing.updateOne({status:1},update,(err,result)=>{
+                    if(err) throw err;
+
+                })
+                // clearTimeout(set)
+            }
             User.find({isAdmin:false}).sort([['count', 'desc']]).exec(function(err, docs) { 
                 if(!err && docs){
                     // let sort = docs.sort(function(a, b){return b.count - a.count})
@@ -162,9 +204,9 @@ let users = {
                         return  e._id == req.user_data.user
                     })
                     if (filt) {
-                        res.render('display',{message:"successful",users:docs,user_id:req.user_data,link:filt.link});
+                        res.render('display',{message:"successful",users:docs,user_id:req.user_data,link:filt.link,count_down:timedown});
                     } else { 
-                        res.render('display',{message:"successful",users:docs,user_id:req.user_data,link:null});
+                        res.render('display',{message:"successful",users:docs,user_id:req.user_data,link:null,count_down:timedown});
                         
                     }
                 }
@@ -174,28 +216,15 @@ let users = {
                 }
 
             })
+             }
+             else{
+                res.render('display',{message:"No campaign goin on",users:null,user_id:null,link:null,count_down:null});
+             }
+                        
+                    })
           }
           catch (error) {
             res.render('display',{message:"error occure"});
-
-          }
-    },
-    admin: async (req,res)=>{
-        try {
-            User.find({isAdmin:false}).sort([['count', 'desc']]).limit(10).exec(function(err, docs) { 
-                if(!err && docs){
-                 res.render('setup',{message:"successful",users:docs,user_id:req.user_data});
-
-                }
-                else{ 
-                 res.render('admin',{message:"error occure"});
-
-                }
-
-            })
-          }
-          catch (error) {
-            res.render('admin',{message:"error occure"});
 
           }
     },
@@ -213,6 +242,7 @@ let users = {
                 })
                 response.save((err,result)=>{
                     if(err) throw err;
+                    
                 res.redirect('/admin');
                 })
            }
@@ -222,25 +252,75 @@ let users = {
 
           }
     },
-    countdown: async (req,res)=>{
-        try {
-            let result = Timing.findOne({status:1},(err,response)=>{
-                if(err) throw err;
-                
-            })
+    admin: async(req,res)=>{
+         try {
+            Timing.findOne({status:1},(err,response)=>{
+                if(err) {console.log(err)}
+                else if(response){
+                    console.log(response)
+                    var today = new Date();
+            var target = new Date(response.endingDate +','+response.endingTime);
+            var currentTime = today.getTime();
+            var targetTime = target.getTime();
+        
+            var time = targetTime - currentTime;
+        
+            var sec = Math.floor(time/1000);
+            var min = Math.floor(sec/60);
+            var hrs = Math.floor(min/60);
+            var days = Math.floor(hrs/24);
+
+            hrs = hrs % 24;
+            min = min % 60;
+            sec = sec % 60;
+        
+        
+            hrs = (hrs<10) ? "0"+hrs : hrs;
+            min = (min<10) ? "0"+min : min;
+            sec = (sec<10) ? "0"+sec : sec;
+           
+             let timedown ={days:days,hrs:hrs,min:min,sec:sec}
             
-          }
-          catch (error) {
-            res.render('admin',{message:"error occure"});
+            var set;
+            if(time <= 0){
+                let update = {$set : {status:0}}
+                Timing.updateOne({status:1},update,(err,result)=>{
+                    if(err) throw err;
+                  
+                })
+            }
+            User.find({isAdmin:false}).sort([['count', 'desc']]).limit(10).exec(function(err, docs) { 
+                if(!err && docs){
+                    // let reses = users.countDown()
+                 res.render('setup',{message:"successful",users:docs,user_id:req.user_data,count_down:timedown,endin:response.endingDate });
+                }
+                else{ 
+                 res.render('setup',{message:"error occure"});
 
-          }
-    },
-    countDown: async(req,res)=>{
-         setInterval(() => {
+                }
+
+            })
+             }
+             else{
+                res.render('setup',{message:"No available campaign initiate one",users:null,user_id:null,count_down:null,endin:null });
+             }
+                        
+                    })
+
              
-         }, 60000);
-
+         } 
+         catch (error) {
+             console.log(error)
+            res.render('setup',{message:"error occure"});
+             
+         }
+            
  },
+
+  
+// function startCountDownTimer(){
+	
+// }
     
 
 
