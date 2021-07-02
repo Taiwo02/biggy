@@ -67,9 +67,9 @@
             <thead>
             <tr>
             <th>#N</th>
-            <th>Firstname</th>
-            <th>Lastname</th>
+            <th>Full name</th>
             <th>Mobile</th>
+            <th>Address</th>
             <th>Status</th>
             </tr>
             </thead>
@@ -78,9 +78,9 @@
             <%users.forEach(function(user,index) {%>
             <tr>
             <td><%=index+1%></td>
-            <td><%=user.firstname%></td>
-            <td><%=user.lastname%></td>
+            <td><%=user.firstname%> <%=user.lastname%></td>
             <td><%=user.mobile%></td>
+            <td><%=user.address%></td>
             <td><%=user.count%></td>
             </tr>
             <%});%>
