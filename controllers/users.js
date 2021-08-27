@@ -52,7 +52,7 @@ let users = {
                         }
                     }
                     else{
-                        re.redirect("/")
+                        res.redirect("/")
                     }
                 })
                
